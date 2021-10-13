@@ -1,0 +1,117 @@
+---
+# Frimtec awning sensors.
+#
+# Sensors to control the awning for a winter garden:
+# - Wind speed
+# - Sun light
+#
+substitutions:
+  device_name: frimtec-awning-sensors
+  friendly_name: "Awning Sensor"
+  device_description: "Sensors to control an awning"
+  wind_pulse_pin: GPIO12
+  sun_light_pin: GPIO32
+  status_led: GPIO5
+
+esphome:
+  name: '${device_name}'
+  comment: '${device_description}'
+  project:
+    name: "frimtec.awning-sensors"
+    version: "1.0.0"
+  platform: ESP32
+  board: nodemcu-32s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: '${device_name}'
+    password: !secret fallback_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret esphome_api_password
+  encryption:
+    key: !secret esphome_api_encryption
+
+ota:
+  safe_mode: true
+  reboot_timeout: 10min
+  num_attempts: 5
+
+web_server:
+  port: 80
+  auth:
+    username: !secret esphome_web_username
+    password: !secret esphome_web_password
+
+output:
+  - platform: gpio
+    pin: GPIO2
+    id: output_red
+  - platform: gpio
+    pin: GPIO4
+    id: output_green
+
+light:
+  - platform: binary
+    internal: false
+    id: led_red
+    name: "${friendly_name} - Status Red"
+    output: output_red
+  - platform: binary
+    internal: false
+    id: led_green
+    name: "${friendly_name} - Status Green"
+    output: output_green
+
+# Status LED for connection
+status_led:
+  pin:
+    # Blue LED
+    number: ${status_led}
+
+# Sensors for ESP version and WIFI information
+text_sensor:
+  - platform: version
+    hide_timestamp: true
+    name: "${friendly_name} - ESPHome Version"
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} - IP Address"
+      icon: mdi:wifi
+    ssid:
+      name: "${friendly_name} - Connected SSID"
+      icon: mdi:wifi-strength-2
+
+sensor:
+  - platform: pulse_counter
+    name: '${friendly_name} - Wind speed'
+    update_interval: 2s
+    state_class: measurement
+    icon: mdi:weather-windy
+    pin: ${wind_pulse_pin}
+
+  - platform: adc
+    id: sun_light
+    pin: ${sun_light_pin}
+    update_interval: 5s
+    attenuation: 11db
+    name: '${friendly_name} - Sun light'
+    icon: "mdi:weather-sunny"
+    device_class: "illuminance"
+    filters:
+      - offset: -3.9
+      - multiply: -1.0
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 5
