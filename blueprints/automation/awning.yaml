@@ -4,9 +4,14 @@ blueprint:
   description: Extend/retract awning depending on given state taking sun azimuth into account.
   domain: automation
   input:
-    state_sensor:
-      name: State sensor
-      description: Enitity providing on/off state (on => extend; off => retract).
+    sun_state_sensor:
+      name: Sun state sensor
+      description: Enitity providing sun state (on/off).
+      selector:
+        entity:
+    wind_state_sensor:
+      name: Wind state sensor
+      description: Enitity providing wind state (on/off).
       selector:
         entity:
     target_awning:
@@ -36,10 +41,13 @@ blueprint:
 variables:
   min_azimuth: !input 'min_azimuth'
   max_azimuth: !input 'max_azimuth'
-  state_sensor: !input 'state_sensor'
+  sun_state_sensor: !input 'sun_state_sensor'
+  wind_state_sensor: !input 'wind_state_sensor'
 trigger:
   - platform: state
-    entity_id: !input state_sensor
+    entity_id: !input sun_state_sensor
+  - platform: state
+    entity_id: !input wind_state_sensor
   - platform: numeric_state
     entity_id: sun.sun
     attribute: azimuth
@@ -50,7 +58,7 @@ trigger:
     above: !input max_azimuth
 action:
   - service: >
-      {% if states(state_sensor) == "on" and state_attr('sun.sun', 'azimuth') > min_azimuth and state_attr('sun.sun', 'azimuth') < max_azimuth %}
+      {% if states(wind_state_sensor) == "off" and states(sun_state_sensor) == "on" and state_attr('sun.sun', 'azimuth') > min_azimuth and state_attr('sun.sun', 'azimuth') < max_azimuth %}
         cover.open_cover
       {% else %}
         cover.close_cover
