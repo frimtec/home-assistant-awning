@@ -1,0 +1,62 @@
+---
+blueprint:
+  name: Awning sensor
+  description: Used to model a sun/wind state from a sun/wind sensor.
+  domain: automation
+  input:
+    sensor:
+      name: Sensor
+      description: Sensor from the home-assistant-awning device (sun or wind).
+      selector:
+        entity:
+          domain: sensor
+    state_light:
+      name: State light
+      description: State light from the home-assistant-awning device (green or blue).
+      selector:
+        target:
+          entity:
+            domain: light
+    activation_threshold:
+      name: Activation threshold
+      description: Sensor level to activate the state.
+      selector:
+        number:
+    activation_threshold_time:
+      name: Activation threshold time
+      description: Time period to ensure the sensor stays above the threshold before activating the state.
+      default: "00:10:00"
+      selector:
+        time:
+    deactivation_threshold:
+      name: Deactivation threshold
+      description: Sensor level to deactivate the state.
+      selector:
+        number:
+    deactivation_threshold_time:
+      name: Deactivation threshold time
+      description: Time period to ensure the sensor stays below the threshold before deactivating the state.
+      default: "00:10:00"
+      selector:
+        time:
+variables:
+  sensor: !input 'sensor'
+trigger:
+  - platform: numeric_state
+    entity_id: !input sensor
+    above: !input activation_threshold
+    for: !input activation_threshold_time
+    id: turn_on
+  - platform: numeric_state
+    entity_id: !input sensor
+    below: !input deactivation_threshold
+    for: !input deactivation_threshold_time
+    id: turn_off
+action:
+  - service: >
+      {% if trigger.id == "turn_on" %}
+        light.turn_on
+      {% else %}
+        light.turn_off
+      {% endif %}
+    target: !input state_light
