@@ -79,7 +79,7 @@ The wiring can be done best with jumper cabels (e.g. [jumper-kabel](https://www.
 | VCC                  | 3V3          |
 | GND                  | GND          |
 | SUN                  | A32 (GPIO32) |
-| WIND                 | D12 (GPIO12) |
+| WIND                 | D13 (GPIO13) |
 
 #### RGB LED
 It is advisable to add a resistor of about 470 Ohm between each color pin of the RGB-LED and the ESP32 GPIO pin.

@@ -9,7 +9,7 @@ substitutions:
   device_name: frimtec-awning-sensors
   friendly_name: "Awning Sensor"
   device_description: "Sensors to control an awning"
-  wind_pulse_pin: GPIO12
+  wind_pulse_pin: GPIO13
   sun_light_pin: GPIO32
   status_led: GPIO5
 
