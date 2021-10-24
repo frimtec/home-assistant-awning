@@ -101,7 +101,35 @@ which you can copy into the `esphome` folder of your Home Assistant config.
 Finally go through the installation wizard of ESPHome and flash the ESP32.
 
 ## Configuration
-TODO
+The automations to control the awnings are prepared in blueprints.
+
+First copy the complete folder structure [blueprints](/blueprints) into your Home Assistant config folder.
+
+
+### Awning sensor automations
+Create two automations to integrate the sensor board from the blueprint [awning-sensor.yaml](/blueprints/automation/frimtec/awning-sensor.yaml) 
+as follows, using threshold values and times as desired for your sensors:
+
+| Name               | Sensor                          | State light                  |
+|--------------------|---------------------------------|------------------------------|
+| Awning Sensor Sun  | sensor.awning_sensor_sun_light  | Awning Sensor - Status Green |
+| Awning Sensor Wind | sensor.awning_sensor_wind_speed | Awning Sensor - Status Red   |
+
+### Awning control automations
+Create an automation for each awning to control. 
+Use the blueprint [awning-control.yaml](/blueprints/automation/frimtec/awning-control.yaml)
+as follows:
+
+| Field               | Value                             |
+|---------------------|-----------------------------------|
+| Name                | Use a name to identify the awning | 
+| Sun state sensor    | light.awning_sensor_status_green  | 
+| Wind state sensor   | light.awning_sensor_status_red    | 
+| Awning              | Select awning entity to control   |
+| Min/Max sun azimuth | Define Min/Max sun azimuth        |
+
+### Example Dashboard
+![Dashboard example](images/dashboard.png)
 
 # Credits
 * [klaasnicolaas](https://github.com/klaasnicolaas) for the 3D case provided in [home-assistant-glow](https://github.com/klaasnicolaas/home-assistant-glow)
