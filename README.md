@@ -2,13 +2,6 @@
 
 [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
----
-**INFO**
-
-This project is still under construction !
-
----
-
 "Home Assistant Awning" can be used to manually build up a low cost but high functional awnings control system for the
 home assistant platform.
 Low cost at least if you already have the mechanical installation of the awnings including the motors to move them.
@@ -61,7 +54,16 @@ The hardware consists of two parts:
 ### Sensor adapter board
 ![Sensor adapter board](images/sensor-adapter-board.jpg)
 
-TODO: Schema
+The sensor adapter board is quite simple and can be wired best on a [Circuit board](https://www.conrad.ch/de/p/rademacher-wr-typ-710-2-platine-hartpapier-l-x-b-100-mm-x-75-mm-35-m-rastermass-2-54-mm-inhalt-1-st-529531.html) according the given schema.
+The components placed on the board are:
+* J1: Connector to the wind sensor
+* J2: Connector to the sunlight sensor (with optional thermostat)
+* J3: Connector to the ESP32
+* R1: 10k ohm resistor
+* R2: 50k ohm trimmer
+
+![Schema adapter board](images/home-assistant-awning_sensor-adapter.png)
+ 
 
 ### ESP32 with status LED
 ![ESP32 in case](images/ESP32.jpg)
