@@ -18,7 +18,7 @@ esphome:
   comment: '${device_description}'
   project:
     name: "frimtec.awning-sensors"
-    version: "1.0.0"
+    version: "1.0.1"
   platform: ESP32
   board: nodemcu-32s
 
