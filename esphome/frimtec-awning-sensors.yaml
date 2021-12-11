@@ -18,7 +18,7 @@ esphome:
   comment: '${device_description}'
   project:
     name: "frimtec.awning-sensors"
-    version: "1.0.1"
+    version: "1.1.0"
   platform: ESP32
   board: nodemcu-32s
 
@@ -36,6 +36,9 @@ captive_portal:
 
 # Enable logging
 logger:
+
+# Enable improv over serial
+improv_serial:
 
 # Enable Home Assistant API
 api:
@@ -96,7 +99,7 @@ text_sensor:
 sensor:
   - platform: pulse_counter
     name: '${friendly_name} - Wind speed'
-    update_interval: 2s
+    update_interval: 10s
     state_class: measurement
     icon: mdi:weather-windy
     pin: ${wind_pulse_pin}
