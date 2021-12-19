@@ -42,9 +42,10 @@ The hardware consists of two parts:
 ### Bill of material
 * 1 x [Node MCU ESP32](https://www.conrad.ch/de/p/joy-it-entwickler-platine-node-mcu-esp32-modul-1656367.html)
 * 1 x [RGB LED](https://www.conrad.ch/de/p/kingbright-l-154a4surkqbdzgw-led-mehrfarbig-rot-blau-gruen-rund-5-mm-200-mcd-300-mcd-1300-mcd-60-20-ma-1-95-v-3-3-1050466.html)
-* 3 x [470 Ohm resistor](https://www.conrad.ch/de/p/yageo-cfr-25jt-52-10k-kohleschicht-widerstand-10-k-axial-bedrahtet-0207-0-25-w-5-1-st-1417697.html)
-* 1 x [10k Ohm resistor](https://www.conrad.ch/de/p/yageo-cfr-25jt-52-470r-kohleschicht-widerstand-470-axial-bedrahtet-0207-0-25-w-5-1-st-1417694.html)
-* 1 x [50k Ohm trimmer](https://www.conrad.ch/de/p/weltron-wel3296-w-503-lf-spindeltrimmer-25-gang-in-line-linear-0-5-w-50-k-9000-1-st-447592.html) 
+* 4 x [Schottky Diodes](https://www.conrad.ch/de/p/infineon-technologies-schottky-diode-gleichrichter-bat60a-sod-323-2-10-v-einzeln-tape-cut-154027.html)
+* 2 x [100 Ohm resistor](https://www.conrad.ch/de/p/yageo-cfr-25jt-52-100r-kohleschicht-widerstand-100-axial-bedrahtet-0207-0-25-w-5-1-st-1417639.html)
+* 4 x [1k Ohm resistor](https://www.conrad.ch/de/p/yageo-cfr-25jt-52-1k0-kohleschicht-widerstand-1-k-axial-bedrahtet-0207-0-25-w-5-1-st-1417699.html)
+* 1 x [10k Ohm resistor](https://www.conrad.ch/de/p/yageo-cfr-25jt-52-10k-kohleschicht-widerstand-10-k-axial-bedrahtet-0207-0-25-w-5-1-st-1417697.html)
 * 2 x [2 or 3 pin connector](https://www.conrad.ch/de/p/te-connectivity-282837-3-schraubklemmblock-1-40-mm-polzahl-num-3-gruen-1-st-1421685.html?gclid=CjwKCAjwzaSLBhBJEiwAJSRokh-6w8SD5mRbWpBqTB3dXs7ZV1in-iJpRmjEg686jQaoJfRHSNdqnBoCJiMQAvD_BwE&utm_source=google-shopping-de&utm_medium=search&utm_campaign=shopping-online-de&utm_content=shopping-ad_cpc&WT.srch=1&ef_id=CjwKCAjwzaSLBhBJEiwAJSRokh-6w8SD5mRbWpBqTB3dXs7ZV1in-iJpRmjEg686jQaoJfRHSNdqnBoCJiMQAvD_BwE%3AG%3As)
 * 1 x [4 pin header](https://www.conrad.ch/de/p/connfly-stiftleiste-standard-anzahl-reihen-1-polzahl-je-reihe-40-ds1021-1-40sf11-1-st-1390109.html)
 * 8 x [Jumper cable](https://www.conrad.ch/de/p/joy-it-rb-cb3-025-jumper-kabel-raspberry-pi-banana-pi-arduino-20x-drahtbruecken-buchse-20x-drahtbruecken-buchse-25-0-1182193.html)
@@ -55,12 +56,17 @@ The hardware consists of two parts:
 ![Sensor adapter board](images/sensor-adapter-board.jpg)
 
 The sensor adapter board is quite simple and can be wired best on a [Circuit board](https://www.conrad.ch/de/p/rademacher-wr-typ-710-2-platine-hartpapier-l-x-b-100-mm-x-75-mm-35-m-rastermass-2-54-mm-inhalt-1-st-529531.html) according the given schema.
+The schottky diodes (SMD diodes) mounted on the backside, require good eyesight and a steady hand. 
+The diodes are important to protect the GPIO pins of the ESP32 from over or under volatge coming in via spikes over the potential long sensor wires. 
+
 The components placed on the board are:
 * J1: Connector to the wind sensor
 * J2: Connector to the sunlight sensor (with optional thermostat)
 * J3: Connector to the ESP32
 * R1: 10k ohm resistor
-* R2: 50k ohm trimmer
+* R2: 1k ohm (or other depending on the sunlight sensor LDR)
+* R3, R5: 100 ohm resistors
+* D1-D4: Fast schottky diodes with low forward volatge (e.g. Infineon BAT60A SOD-323-2 10 V)
 
 ![Schema adapter board](images/home-assistant-awning_sensor-adapter.png)
  
@@ -84,7 +90,7 @@ The wiring can be done best with jumper cabels (e.g. [jumper-kabel](https://www.
 | WIND                 | D13 (GPIO13) |
 
 #### RGB LED
-It is advisable to add a resistor of about 470 Ohm between each color pin of the RGB-LED and the ESP32 GPIO pin.
+It is advisable to add a resistor of about 1k Ohm between each color pin of the RGB-LED and the ESP32 GPIO pin.
 Your best bet is to use a small piece of the circuit board.
 
 | LED    | ESP32      |
