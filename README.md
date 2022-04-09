@@ -1,6 +1,8 @@
 ## Home Assistant Awning 
 
-[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License][license-shield]][license]
+
+![Project Maintenance][maintenance-shield]
 
 "Home Assistant Awning" can be used to manually build up a low cost but high functional awnings control system for the
 home assistant platform.
@@ -12,7 +14,7 @@ already over 20 years old and the controller was a closed system not offering an
 ![Sunlight and wind sensor](images/winter-garden.jpg)
 
 Each awning is moved with a retractable awning motor having an 240V AC input for expand and one for retract.
-The retractable awning motors are controlled by a [Zigbee blinds actuator from NEXENTRO](https://cdn.competec.ch/documents2/4/5/5/194267554/194267554.pdf).
+The retractable awning motors are controlled by a [Zigbee blinds actuator from NEXENTRO][nexentro-documentation].
 
 On the top of the winter garden two sensors are mounted:
 * Sunlight sensor (LDR - Light Dependent Resistor)
@@ -40,22 +42,22 @@ The hardware consists of two parts:
 * ESP32 with status LED
 
 ### Bill of material
-* 1 x [Node MCU ESP32](https://www.conrad.ch/de/p/joy-it-entwickler-platine-node-mcu-esp32-modul-1656367.html)
-* 1 x [RGB LED](https://www.conrad.ch/de/p/kingbright-l-154a4surkqbdzgw-led-mehrfarbig-rot-blau-gruen-rund-5-mm-200-mcd-300-mcd-1300-mcd-60-20-ma-1-95-v-3-3-1050466.html)
-* 4 x [Schottky Diodes](https://www.conrad.ch/de/p/infineon-technologies-schottky-diode-gleichrichter-bat60a-sod-323-2-10-v-einzeln-tape-cut-154027.html)
-* 2 x [100 Ohm resistor](https://www.conrad.ch/de/p/yageo-cfr-25jt-52-100r-kohleschicht-widerstand-100-axial-bedrahtet-0207-0-25-w-5-1-st-1417639.html)
-* 4 x [1k Ohm resistor](https://www.conrad.ch/de/p/yageo-cfr-25jt-52-1k0-kohleschicht-widerstand-1-k-axial-bedrahtet-0207-0-25-w-5-1-st-1417699.html)
-* 1 x [10k Ohm resistor](https://www.conrad.ch/de/p/yageo-cfr-25jt-52-10k-kohleschicht-widerstand-10-k-axial-bedrahtet-0207-0-25-w-5-1-st-1417697.html)
-* 2 x [2 or 3 pin connector](https://www.conrad.ch/de/p/te-connectivity-282837-3-schraubklemmblock-1-40-mm-polzahl-num-3-gruen-1-st-1421685.html?gclid=CjwKCAjwzaSLBhBJEiwAJSRokh-6w8SD5mRbWpBqTB3dXs7ZV1in-iJpRmjEg686jQaoJfRHSNdqnBoCJiMQAvD_BwE&utm_source=google-shopping-de&utm_medium=search&utm_campaign=shopping-online-de&utm_content=shopping-ad_cpc&WT.srch=1&ef_id=CjwKCAjwzaSLBhBJEiwAJSRokh-6w8SD5mRbWpBqTB3dXs7ZV1in-iJpRmjEg686jQaoJfRHSNdqnBoCJiMQAvD_BwE%3AG%3As)
-* 1 x [4 pin header](https://www.conrad.ch/de/p/connfly-stiftleiste-standard-anzahl-reihen-1-polzahl-je-reihe-40-ds1021-1-40sf11-1-st-1390109.html)
-* 8 x [Jumper cable](https://www.conrad.ch/de/p/joy-it-rb-cb3-025-jumper-kabel-raspberry-pi-banana-pi-arduino-20x-drahtbruecken-buchse-20x-drahtbruecken-buchse-25-0-1182193.html)
-* 1 x [Circuit board](https://www.conrad.ch/de/p/rademacher-wr-typ-710-2-platine-hartpapier-l-x-b-100-mm-x-75-mm-35-m-rastermass-2-54-mm-inhalt-1-st-529531.html) 
+* 1 x [Node MCU ESP32][conrad-esp32]
+* 1 x [RGB LED][conrad-rgb-led]
+* 4 x [Schottky Diodes][conrad-schottky-diode]
+* 2 x [100 Ohm resistor][conrad-100-resistor]
+* 4 x [1k Ohm resistor][conrad-1k-resistor]
+* 1 x [10k Ohm resistor][conrad-10k-resistor]
+* 2 x [2 or 3 pin connector][conrad-connector]
+* 1 x [4 pin header][conrad-4pin-header]
+* 8 x [Jumper cable][conrad-jumper-cable]
+* 1 x [Circuit board][conrad-board] 
 * 3D printed case (see the [case](/case) folder)
 
 ### Sensor adapter board
 ![Sensor adapter board](images/sensor-adapter-board.jpg)
 
-The sensor adapter board is quite simple and can be wired best on a [Circuit board](https://www.conrad.ch/de/p/rademacher-wr-typ-710-2-platine-hartpapier-l-x-b-100-mm-x-75-mm-35-m-rastermass-2-54-mm-inhalt-1-st-529531.html) according the given schema.
+The sensor adapter board is quite simple and can be wired best on a [Circuit board][conrad-board] according the given schema.
 The schottky diodes (SMD diodes) mounted on the backside, require good eyesight and a steady hand. 
 The diodes are important to protect the GPIO pins of the ESP32 from over or under volatge coming in via spikes over the potential long sensor wires. 
 
@@ -80,7 +82,7 @@ The ESP32 including the RGB-LED fits perfectly into the [case](/case) that can b
 ### Wiring instruction 
 
 #### Sensor adapter board
-The wiring can be done best with jumper cabels (e.g. [jumper-kabel](https://www.conrad.ch/de/p/joy-it-rb-cb3-025-jumper-kabel-raspberry-pi-banana-pi-arduino-20x-drahtbruecken-buchse-20x-drahtbruecken-buchse-25-0-1182193.html)).
+The wiring can be done best with jumper cabels (e.g. [jumper-cable][conrad-jumper-cable]).
 
 | Sensor adapter board | ESP32        |
 |----------------------|--------------|
@@ -102,7 +104,7 @@ Your best bet is to use a small piece of the circuit board.
 
 #### Flash ESP32
 
-Once you've connected all the hardware, we'll get started with the configuration for [ESPHome](https://esphome.io).
+Once you've connected all the hardware, we'll get started with the configuration for [ESPHome][esphome].
 
 In this repository you will find the file [esphome/frimtec-awning-sensors.yaml][file], 
 which you can copy into the `esphome` folder of your Home Assistant config. 
@@ -140,6 +142,24 @@ as follows:
 ![Dashboard example](images/dashboard.png)
 
 # Credits
-* [klaasnicolaas](https://github.com/klaasnicolaas) for the 3D case provided in [home-assistant-glow](https://github.com/klaasnicolaas/home-assistant-glow)
+* [klaasnicolaas][github-klaasnicolaas] for the 3D case provided in [home-assistant-glow][home-assistant-glow]
+
 
 [file]: /esphome/frimtec-awning-sensors.yaml
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2022.svg
+[license-shield]: https://img.shields.io/github/license/frimtec/home-assistant-awning.svg
+[license]: https://opensource.org/licenses/Apache-2.0
+[nexentro-documentation]: https://cdn.competec.ch/documents2/4/5/5/194267554/194267554.pdf
+[esphome]: https://esphome.io
+[github-klaasnicolaas]: https://github.com/klaasnicolaas
+[home-assistant-glow]: https://github.com/klaasnicolaas/home-assistant-glow
+[conrad-esp32]: https://www.conrad.ch/de/p/joy-it-entwickler-platine-node-mcu-esp32-modul-1656367.html
+[conrad-rgb-led]: https://www.conrad.ch/de/p/kingbright-l-154a4surkqbdzgw-led-mehrfarbig-rot-blau-gruen-rund-5-mm-200-mcd-300-mcd-1300-mcd-60-20-ma-1-95-v-3-3-1050466.html
+[conrad-board]: https://www.conrad.ch/de/p/rademacher-wr-typ-710-2-platine-hartpapier-l-x-b-100-mm-x-75-mm-35-m-rastermass-2-54-mm-inhalt-1-st-529531.html
+[conrad-jumper-cable]: https://www.conrad.ch/de/p/joy-it-rb-cb3-025-jumper-kabel-raspberry-pi-banana-pi-arduino-20x-drahtbruecken-buchse-20x-drahtbruecken-buchse-25-0-1182193.html
+[conrad-4pin-header]: https://www.conrad.ch/de/p/connfly-stiftleiste-standard-anzahl-reihen-1-polzahl-je-reihe-40-ds1021-1-40sf11-1-st-1390109.html
+[conrad-schottky-diode]: https://www.conrad.ch/de/p/infineon-technologies-schottky-diode-gleichrichter-bat60a-sod-323-2-10-v-einzeln-tape-cut-154027.html
+[conrad-100-resistor]: https://www.conrad.ch/de/p/yageo-cfr-25jt-52-100r-kohleschicht-widerstand-100-axial-bedrahtet-0207-0-25-w-5-1-st-1417639.html
+[conrad-1k-resistor]: https://www.conrad.ch/de/p/yageo-cfr-25jt-52-1k0-kohleschicht-widerstand-1-k-axial-bedrahtet-0207-0-25-w-5-1-st-1417699.html
+[conrad-10k-resistor]: https://www.conrad.ch/de/p/yageo-cfr-25jt-52-10k-kohleschicht-widerstand-10-k-axial-bedrahtet-0207-0-25-w-5-1-st-1417697.html
+[conrad-connector]: https://www.conrad.ch/de/p/te-connectivity-282837-3-schraubklemmblock-1-40-mm-polzahl-num-3-gruen-1-st-1421685.html?gclid=CjwKCAjwzaSLBhBJEiwAJSRokh-6w8SD5mRbWpBqTB3dXs7ZV1in-iJpRmjEg686jQaoJfRHSNdqnBoCJiMQAvD_BwE&utm_source=google-shopping-de&utm_medium=search&utm_campaign=shopping-online-de&utm_content=shopping-ad_cpc&WT.srch=1&ef_id=CjwKCAjwzaSLBhBJEiwAJSRokh-6w8SD5mRbWpBqTB3dXs7ZV1in-iJpRmjEg686jQaoJfRHSNdqnBoCJiMQAvD_BwE%3AG%3As
