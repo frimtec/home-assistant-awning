@@ -9,17 +9,23 @@ substitutions:
   device_name: frimtec-awning-sensors
   friendly_name: "Awning Sensor"
   device_description: "Sensors to control an awning"
+  project_version: "1.2.0"
   wind_pulse_pin: GPIO13
   sun_light_pin: GPIO32
   status_led: GPIO5
+
+  # Webserver credentials ⬇ #
+  web_username: !secret esphome_web_username
+  web_password: !secret esphome_web_password
 
 esphome:
   name: '${device_name}'
   comment: '${device_description}'
   project:
     name: "frimtec.awning-sensors"
-    version: "1.1.0"
-  platform: ESP32
+    version: "${project_version}"
+
+esp32:
   board: nodemcu-32s
 
 wifi:
@@ -54,8 +60,8 @@ ota:
 web_server:
   port: 80
   auth:
-    username: !secret esphome_web_username
-    password: !secret esphome_web_password
+    username: '${web_username}'
+    password: '${web_password}'
 
 output:
   - platform: gpio
@@ -85,18 +91,32 @@ status_led:
 
 # Sensors for ESP version and WIFI information
 text_sensor:
+  # Installed version
+  - platform: template
+    name: '${friendly_name} - Installed Version'
+    id: glow_version
+    icon: "mdi:label-outline"
+    entity_category: diagnostic
+    lambda: |-
+      return {"${project_version}"};
+    update_interval: 6h
   - platform: version
     hide_timestamp: true
-    name: "${friendly_name} - ESPHome Version"
+    name: '${friendly_name} - ESPHome Version'
   - platform: wifi_info
     ip_address:
-      name: "${friendly_name} - IP Address"
+      name: '${friendly_name} - IP Address'
       icon: mdi:wifi
     ssid:
-      name: "${friendly_name} - Connected SSID"
+      name: '${friendly_name} - Connected SSID'
       icon: mdi:wifi-strength-2
 
 sensor:
+  # WiFi signal
+  - platform: wifi_signal
+    name: "${friendly_name} - WiFi Signal"
+    update_interval: 120s
+
   - platform: pulse_counter
     name: '${friendly_name} - Wind speed'
     update_interval: 10s
