@@ -138,6 +138,18 @@ as follows:
 | Awning              | Select awning entity to control   |
 | Min/Max sun azimuth | Define Min/Max sun azimuth        |
 
+
+### Calibrate the wind sensor
+The wind sensor reports the wind speed in km/h.
+To have accurate results two characteristics of the used cup anemometer needs to be configured in the home assistant device:
+* radius: cup anemometer radius in millimeter (default value: 38 mm)
+* impulses_per_rotation: cup anemometer impulses per full rotation (default value: 1)
+
+The wind speed is measured as impulses per minute (x) and then converted into km/h with the following formula:
+```
+v = x * ((2 * Pi * radius * 60) / (impulses_per_rotation * 1'000'000))   
+```
+
 ### Example Dashboard
 ![Dashboard example](images/dashboard.png)
 
