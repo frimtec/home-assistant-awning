@@ -146,7 +146,7 @@ as follows:
 
 
 [file]: /esphome/frimtec-awning-sensors.yaml
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2023.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg
 [license-shield]: https://img.shields.io/github/license/frimtec/home-assistant-awning.svg
 [license]: https://opensource.org/licenses/Apache-2.0
 [nexentro-documentation]: https://cdn.competec.ch/documents2/4/5/5/194267554/194267554.pdf

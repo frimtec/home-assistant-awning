@@ -2,14 +2,14 @@
 # Frimtec awning sensors.
 #
 # Sensors to control the awning for a winter garden:
-# - Wind speed
+# - Wind speed [km/h]
 # - Sun light
 #
 substitutions:
   device_name: frimtec-awning-sensors
   friendly_name: "Awning Sensor"
   device_description: "Sensors to control an awning"
-  project_version: "1.2.1"
+  project_version: "1.3.0"
   wind_pulse_pin: GPIO13
   sun_light_pin: GPIO32
   status_led: GPIO5
@@ -110,6 +110,29 @@ text_sensor:
       name: '${friendly_name} - Connected SSID'
       icon: mdi:wifi-strength-2
 
+number:
+  # Set the number of pulses of one anemometer rotation
+  - platform: template
+    id: anemometer_pulses
+    name: 'Anemometer pulses per rotation'
+    optimistic: true
+    min_value: 1
+    max_value: 100
+    step: 1
+    restore_value: yes
+    initial_value: 1
+
+  # Set the radius of the cup anemometer [mm]
+  - platform: template
+    id: anemometer_radius
+    name: 'Anemometer radius [mm]'
+    optimistic: true
+    min_value: 1
+    max_value: 500
+    step: 1
+    restore_value: yes
+    initial_value: 38
+
 sensor:
   # WiFi signal
   - platform: wifi_signal
@@ -119,9 +142,15 @@ sensor:
   - platform: pulse_counter
     name: '${friendly_name} - Wind speed'
     update_interval: 10s
+    force_update: true
+    device_class: wind_speed
+    unit_of_measurement: km/h
     state_class: measurement
     icon: mdi:weather-windy
     pin: ${wind_pulse_pin}
+    filters:
+      # multiply value = (2 * pi * anemometer_radius * 60) / (anemometer_pulses * 1000000)
+      - lambda: return x * ((id(anemometer_radius).state * 37.699111843) / (id(anemometer_pulses).state * 100000.0));
 
   - platform: adc
     id: sun_light
