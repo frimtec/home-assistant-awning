@@ -1,4 +1,4 @@
-## Home Assistant Awning 
+## Home Assistant Awning
 
 [![License][license-shield]][license]
 
@@ -25,7 +25,7 @@ On the top of the winter garden two sensors are mounted:
 A thermostat located in the winter garden can open and close the wire to the sunlight sensor.
 If the temperatur threshold of the thermostat is reached, the wire is closed.
 
-The scope of this project is the low power hardware and the configuration to integrate the sensors and awning actuator into 
+The scope of this project is the low power hardware and the configuration to integrate the sensors and awning actuator into
 a home assistent instance.
 
 ---
@@ -51,15 +51,15 @@ The hardware consists of two parts:
 * 2 x [2 or 3 pin connector][conrad-connector]
 * 1 x [4 pin header][conrad-4pin-header]
 * 8 x [Jumper cable][conrad-jumper-cable]
-* 1 x [Circuit board][conrad-board] 
+* 1 x [Circuit board][conrad-board]
 * 3D printed case (see the [case](/case) folder)
 
 ### Sensor adapter board
 ![Sensor adapter board](images/sensor-adapter-board.jpg)
 
 The sensor adapter board is quite simple and can be wired best on a [Circuit board][conrad-board] according the given schema.
-The schottky diodes (SMD diodes) mounted on the backside, require good eyesight and a steady hand. 
-The diodes are important to protect the GPIO pins of the ESP32 from over or under volatge coming in via spikes over the potential long sensor wires. 
+The schottky diodes (SMD diodes) mounted on the backside, require good eyesight and a steady hand.
+The diodes are important to protect the GPIO pins of the ESP32 from over or under volatge coming in via spikes over the potential long sensor wires.
 
 The components placed on the board are:
 * J1: Connector to the wind sensor
@@ -71,15 +71,15 @@ The components placed on the board are:
 * D1-D4: Fast schottky diodes with low forward volatge (e.g. Infineon BAT60A SOD-323-2 10 V)
 
 ![Schema adapter board](images/home-assistant-awning_sensor-adapter.png)
- 
+
 
 ### ESP32 with status LED
 ![ESP32 in case](images/ESP32.jpg)
 ![ESP32 with LED](images/ESP32-LED.jpg)
 
-The ESP32 including the RGB-LED fits perfectly into the [case](/case) that can be 3D printed. 
+The ESP32 including the RGB-LED fits perfectly into the [case](/case) that can be 3D printed.
 
-### Wiring instruction 
+### Wiring instruction
 
 #### Sensor adapter board
 The wiring can be done best with jumper cabels (e.g. [jumper-cable][conrad-jumper-cable]).
@@ -106,8 +106,8 @@ Your best bet is to use a small piece of the circuit board.
 
 Once you've connected all the hardware, we'll get started with the configuration for [ESPHome][esphome].
 
-In this repository you will find the file [esphome/frimtec-awning-sensors.yaml][file], 
-which you can copy into the `esphome` folder of your Home Assistant config. 
+In this repository you will find the file [esphome/frimtec-awning-sensors.yaml][file],
+which you can copy into the `esphome` folder of your Home Assistant config.
 Finally go through the installation wizard of ESPHome and flash the ESP32.
 
 ## Configuration
@@ -117,7 +117,7 @@ First copy the complete folder structure [blueprints](/blueprints) into your Hom
 
 
 ### Awning sensor automations
-Create two automations to integrate the sensor board from the blueprint [awning-sensor.yaml](/blueprints/automation/frimtec/awning-sensor.yaml) 
+Create two automations to integrate the sensor board from the blueprint [awning-sensor.yaml](/blueprints/automation/frimtec/awning-sensor.yaml)
 as follows, using threshold values and times as desired for your sensors:
 
 | Name               | Sensor                          | State light                  |
@@ -126,7 +126,7 @@ as follows, using threshold values and times as desired for your sensors:
 | Awning Sensor Wind | sensor.awning_sensor_wind_speed | Awning Sensor - Status Red   |
 
 ### Awning control automations
-Create an automation for each awning to control. 
+Create an automation for each awning to control.
 Use the blueprint [awning-control.yaml](/blueprints/automation/frimtec/awning-control.yaml)
 as follows:
 
@@ -149,6 +149,15 @@ The wind speed is measured as impulses per minute (x) and then converted into km
 ```
 v = x * ((2 * Pi * radius * 60) / (impulses_per_rotation * 1'000'000))   
 ```
+
+### Calibrate the sunlight sensor
+The sunlight sensor reports the illuminance in lux.
+To have accurate results the measured value from the ADC can be adjusted by two parameters 'sunlight_additive' and 'sunlight_multiplicative'.
+The illuminance is calculated with the following formula:
+```
+i = (x + sunlight_additive) * sunlight_multiplicative   
+```
+Negative values are clipped to zero.
 
 ### Example Dashboard
 ![Dashboard example](images/dashboard.png)
