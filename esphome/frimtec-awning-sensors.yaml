@@ -3,13 +3,13 @@
 #
 # Sensors to control the awning for a winter garden:
 # - Wind speed [km/h]
-# - Sunlight [lux]
+# - Sunlight [lx]
 #
 substitutions:
   device_name: frimtec-awning-sensors
   friendly_name: "Awning Sensor"
   device_description: "Sensors to control an awning"
-  project_version: "1.4.0"
+  project_version: "1.4.1"
   wind_pulse_pin: GPIO13
   sun_light_pin: GPIO32
   status_led: GPIO5
@@ -131,10 +131,10 @@ number:
     restore_value: yes
     initial_value: 38
 
-  # Sunlight additive to convert sensor value to lux
+  # Sunlight additive to convert sensor value to lx
   - platform: template
     id: sun_light_add
-    name: 'Sunlight additive to convert sensor value to lux'
+    name: 'Sunlight additive to convert sensor value to lx'
     optimistic: true
     min_value: -10
     max_value: 10
@@ -142,10 +142,10 @@ number:
     restore_value: yes
     initial_value: -3.155
 
-  # Sunlight multiplicative to convert sensor value to lux
+  # Sunlight multiplicative to convert sensor value to lx
   - platform: template
     id: sun_light_multiply
-    name: 'Sunlight multiplicative to convert sensor value to lux'
+    name: 'Sunlight multiplicative to convert sensor value to lx'
     optimistic: true
     min_value: -10000
     max_value: 10000
@@ -180,7 +180,7 @@ sensor:
     name: '${friendly_name} - Sun light'
     icon: "mdi:weather-sunny"
     device_class: "illuminance"
-    unit_of_measurement: lux
+    unit_of_measurement: lx
     state_class: measurement
     filters:
       - lambda: return (x + id(sun_light_add).state) * id(sun_light_multiply).state;
