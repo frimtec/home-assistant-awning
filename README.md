@@ -151,7 +151,7 @@ v = x * ((2 * Pi * radius * 60) / (impulses_per_rotation * 1'000'000))
 ```
 
 ### Calibrate the sunlight sensor
-The sunlight sensor reports the illuminance in lux.
+The sunlight sensor reports the illuminance in lx.
 To have accurate results the measured value from the ADC can be adjusted by two parameters 'sunlight_additive' and 'sunlight_multiplicative'.
 The illuminance is calculated with the following formula:
 ```
